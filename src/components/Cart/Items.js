@@ -1,6 +1,7 @@
-import React from 'react';
-
-const Items = ({ item, addProduct, removeProduct, deleteProduct }) => {
+import React, { useContext } from 'react';
+import { CartContext } from '../../context/CartContext';
+const Items = ({ item }) => {
+  const { removeItem, increment, decrement } = useContext(CartContext);
   return (
     <div className='p-4'>
       <div className='row'>
@@ -27,7 +28,7 @@ const Items = ({ item, addProduct, removeProduct, deleteProduct }) => {
               type='button'
               className='btn btn-warning text-light btn-sm me-2'
               onClick={() => {
-                removeProduct(item);
+                decrement(item);
               }}
             >
               <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>
@@ -35,12 +36,18 @@ const Items = ({ item, addProduct, removeProduct, deleteProduct }) => {
                 <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z' />
               </svg>
             </button>
-            <input className='form-control form-control-sm' type='text' placeholder='0' value={item.qty} disabled />
+            <input
+              className='form-control form-control-sm'
+              type='text'
+              placeholder='0'
+              value={item.quantity}
+              disabled
+            />
             <button
               type='button'
               className='btn btn-success btn-sm ms-2'
               onClick={() => {
-                addProduct(item);
+                increment(item);
               }}
             >
               <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>
@@ -50,14 +57,14 @@ const Items = ({ item, addProduct, removeProduct, deleteProduct }) => {
             </button>
           </div>
           <div className='price pt-4'>
-            <h3>Nrs. {item.price * item.qty}</h3>
+            <h3>Nrs. {(item.price * item.quantity).toFixed(2)}</h3>
           </div>
           <div className='remove-item'>
             <button
               type='button'
               className='btn btn-danger btn-sm'
               onClick={() => {
-                deleteProduct(item);
+                removeItem(item);
               }}
             >
               <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>

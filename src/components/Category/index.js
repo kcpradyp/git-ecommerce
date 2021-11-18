@@ -13,7 +13,7 @@ export default function Category({ category, addProduct }) {
         setData(json);
         setLoading(false);
       });
-  }, []);
+  }, [category]);
   return (
     <div className='container'>
       <h1 className='text-capitalize'>{category}</h1>

@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-export default function Item({ data, addProduct }) {
+import { CartContext } from '../context/CartContext';
+import { types } from '../context/CartContext';
+export default function Item({ data }) {
+  const { dispatch } = useContext(CartContext);
+  const increment = (item) => {
+    return dispatch({
+      type: types.INCREMENT,
+      payload: item,
+    });
+  };
   return (
     <div className='col-md-4 mb-4'>
       <div className='card' style={{ minHeight: '100%' }}>
@@ -13,7 +22,7 @@ export default function Item({ data, addProduct }) {
         </div>
         <div className='card-body d-flex align-items-center justify-content-between'>
           <b>Nrs. {data.price}</b>
-          <button type='button' className='btn btn-sm btn-primary' onClick={() => addProduct(data)}>
+          <button type='button' className='btn btn-sm btn-primary' onClick={() => increment(data)}>
             Add to cart
           </button>
         </div>
